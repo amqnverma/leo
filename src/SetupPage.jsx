@@ -130,9 +130,9 @@ const GOTCHAS = [
 
 function SetupPage() {
   useEffect(() => {
-    document.title = 'Setup · leo';
+    document.title = 'Setup · Leo';
     return () => {
-      document.title = 'leo';
+      document.title = 'Leo - Your Entire Productivity Stack';
     };
   }, []);
 
