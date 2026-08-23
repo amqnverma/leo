@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --bg-color: #f6f5ef;
+  --primary-blue: #4454ff;
+  --text-dark: #1a1a1a;
+  --text-light: #ffffff;
+  
+  --font-main: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-color);
+  color: var(--text-dark);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Typography Helpers */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+/* Animations */
+@keyframes floatUp {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-40px); }
+}
+
+@keyframes fadeInScale {
+  0% { opacity: 0; transform: translateY(20px) scale(0.98); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes floatGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
