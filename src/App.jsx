@@ -247,7 +247,7 @@ function App() {
             <div className="accordion-header"><span>NOTION</span><span>01</span></div>
             <div className="accordion-content default-content">
               <h2 className="accordion-title">All your tasks, perfectly organized in one place.</h2>
-              <div className="accordion-link">Connect Notion -&gt;</div>
+              <div className="accordion-link">Connect Notion<span className="link-arrow"> -&gt;</span></div>
             </div>
             <div className="accordion-content hover-reveal">
               <h2 className="accordion-title">Notion Sync</h2>
@@ -258,7 +258,7 @@ function App() {
             <div className="accordion-header"><span>CALENDAR</span><span>02</span></div>
             <div className="accordion-content default-content">
               <h2 className="accordion-title">Never miss a beat with smart scheduling.</h2>
-              <div className="accordion-link">Sync Calendar -&gt;</div>
+              <div className="accordion-link">Sync Calendar<span className="link-arrow"> -&gt;</span></div>
             </div>
             <div className="accordion-content hover-reveal">
               <h2 className="accordion-title">Google Calendar</h2>
@@ -269,7 +269,7 @@ function App() {
             <div className="accordion-header"><span>GMAIL</span><span>03</span></div>
             <div className="accordion-content default-content">
               <h2 className="accordion-title">Your inbox summarized, every single morning.</h2>
-              <div className="accordion-link">Connect Gmail -&gt;</div>
+              <div className="accordion-link">Connect Gmail<span className="link-arrow"> -&gt;</span></div>
             </div>
             <div className="accordion-content hover-reveal">
               <h2 className="accordion-title">Gmail Intelligence</h2>
@@ -280,7 +280,7 @@ function App() {
             <div className="accordion-header"><span>DIGEST</span><span>04</span></div>
             <div className="accordion-content default-content">
               <h2 className="accordion-title">A clear daily brief to keep you focused.</h2>
-              <div className="accordion-link">View Digest -&gt;</div>
+              <div className="accordion-link">View Digest<span className="link-arrow"> -&gt;</span></div>
             </div>
             <div className="accordion-content hover-reveal">
               <h2 className="accordion-title">Morning Digest</h2>
@@ -447,7 +447,7 @@ function App() {
         {/* Stats row */}
         <div className="orbit-stats">
           <div className="orbit-stat">
-            <span className="orbit-stat-number">500+</span>
+            <span className="orbit-stat-number">5000+</span>
             <span className="orbit-stat-label">Tasks Managed</span>
           </div>
           <div className="orbit-stat">
@@ -547,7 +547,7 @@ function App() {
             required
           />
           <button type="submit" className="newsletter-btn" disabled={subscribeStatus === 'loading' || subscribeStatus === 'success'}>
-            <span className="btn-icon">📨</span> {subscribeStatus === 'loading' ? 'Joining...' : 'Join Now'}
+            <span className="btn-icon">📨</span> {subscribeStatus === 'loading' ? 'Joining...' : 'Get Leo'}
           </button>
         </form>
         {subscribeStatus === 'success' ? (
@@ -555,7 +555,7 @@ function App() {
             Thank you - the n8n template for Leo has been delivered to your Email, if not recieved check spam folder
           </p>
         ) : (
-          <p className="newsletter-meta">👥 Join 2,500 Designers</p>
+          <p className="newsletter-meta">👥 Join 240+ Engineers</p>
         )}
       </section>
 

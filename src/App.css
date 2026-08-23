@@ -1273,6 +1273,7 @@
 
 .newsletter-input {
   flex: 1;
+  min-width: 0;
   border: none;
   background: none;
   padding: 0.75rem 1.25rem;
@@ -1297,6 +1298,8 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  flex-shrink: 0;
+  white-space: nowrap;
   transition: background 0.2s;
 }
 
@@ -1493,7 +1496,18 @@
   .accordion-item:nth-child(2n) { border-right: none; }
   .accordion-item:nth-last-child(-n+2) { border-bottom: none; }
   .accordion-title { font-size: 1.1rem; line-height: 1.35; max-width: none; }
-  .accordion-link { margin-top: auto; padding-top: 0.5rem; order: 3; }
+  .accordion-link {
+    margin-top: auto;
+    padding-top: 0.5rem;
+    order: 3;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+  /* Narrow cards can't fit the arrow — drop it on touch layouts */
+  .link-arrow { display: none; }
+
+  /* Reclaim horizontal room so the card text isn't squeezed to ~110px */
+  .feature-section { padding: 0 1rem; }
 
   .default-content,
   .hover-reveal {
@@ -1532,13 +1546,20 @@
 }
 
 @media (max-width: 560px) {
-  .hero-section { min-height: 78vh; padding-top: 8rem; }
+  .hero-section { min-height: auto; padding: 7.5rem 1.25rem 2rem; }
   .hero-headline { font-size: 1.95rem; }
   .subheading-line { font-size: 0.82rem; }
   .hero-buttons { flex-wrap: wrap; }
+
+  /* Put the fan into normal flow so it can never overlap the buttons.
+     The negative margin reclaims the space the 0.5 scale leaves behind
+     (folders are 252px tall, so half of that is dead space). */
   .hero-folders {
-    bottom: -20px;
+    position: static;
+    margin-top: 1.75rem;
+    margin-bottom: -126px;
     transform: scale(0.5);
+    transform-origin: top center;
   }
 
   /* How it works — drop the decorative line graphic on phones */
@@ -1583,6 +1604,20 @@
   .update-card {
     flex: 0 0 82%;
     scroll-snap-align: start;
+  }
+
+  /* Tighten the dead space stacked between sections (updates -> newsletter) */
+  .section-divider { margin: 2rem auto; }
+  .updates-section { padding-bottom: 3rem; }
+  .newsletter-section { padding-top: 2.5rem; }
+
+  /* Keep the "Get Leo" button on one line next to the email field */
+  .newsletter-btn {
+    padding: 0.7rem 1.1rem;
+    font-size: 0.88rem;
+  }
+  .newsletter-input {
+    padding: 0.7rem 0.9rem;
   }
 }
 
