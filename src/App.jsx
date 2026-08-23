@@ -1,57 +1,8 @@
 import { useState, useEffect } from 'react';
 import './App.css';
-
-// Leo Zodiac Pixel Art SVG
-const LeoIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="#4454ff" xmlns="http://www.w3.org/2000/svg">
-    <rect x="5" y="12" width="2" height="2" />
-    <rect x="7" y="10" width="2" height="2" />
-    <rect x="7" y="14" width="2" height="2" />
-    <rect x="9" y="12" width="2" height="2" />
-    <rect x="9" y="6" width="2" height="4" />
-    <rect x="11" y="4" width="4" height="2" />
-    <rect x="15" y="6" width="2" height="2" />
-    <rect x="17" y="8" width="2" height="4" />
-    <rect x="15" y="12" width="2" height="2" />
-    <rect x="13" y="14" width="2" height="4" />
-    <rect x="15" y="18" width="4" height="2" />
-    <rect x="19" y="14" width="2" height="4" />
-  </svg>
-);
-
-// Brand logos
-const GmailLogo = () => (
-  <svg viewBox="0 0 24 24" width="20" height="20">
-    <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z" fill="#EA4335" />
-  </svg>
-);
-
-const CalendarLogo = () => (
-  <svg viewBox="0 0 200 200" width="20" height="20">
-    <rect width="200" height="200" rx="40" fill="#4285F4" />
-    <rect x="40" y="70" width="120" height="95" rx="8" fill="white" />
-    <rect x="60" y="35" width="8" height="30" rx="4" fill="white" />
-    <rect x="132" y="35" width="8" height="30" rx="4" fill="white" />
-    <rect x="55" y="95" width="25" height="20" rx="3" fill="#4285F4" />
-    <rect x="90" y="95" width="25" height="20" rx="3" fill="#4285F4" />
-    <rect x="125" y="95" width="25" height="20" rx="3" fill="#e8eaed" />
-    <rect x="55" y="125" width="25" height="20" rx="3" fill="#e8eaed" />
-    <rect x="90" y="125" width="25" height="20" rx="3" fill="#e8eaed" />
-  </svg>
-);
-
-const NotionLogo = () => (
-  <svg viewBox="0 0 100 100" width="20" height="20">
-    <path d="M6.017 4.313l55.333-4.087c6.797-.583 8.543-.19 12.817 2.917l17.663 12.443c2.913 2.14 3.883 2.723 3.883 5.053v68.243c0 4.277-1.553 6.807-6.99 7.193L24.467 99.967c-4.08.193-6.023-.39-8.16-3.113L3.3 79.94c-2.333-3.113-3.3-5.443-3.3-8.167V11.113c0-3.497 1.553-6.413 6.017-6.8z" fill="white" />
-    <path d="M61.35.227l-55.333 4.087C.573 4.7-1.473 7.617-1.473 11.113v60.66c0 2.724.967 5.054 3.3 8.167l13.007 16.913c2.137 2.723 4.08 3.307 8.16 3.113L87.223 96.08c5.437-.387 6.99-2.917 6.99-7.193V17.64c0-2.14-.58-2.723-2.467-4.117L74.167 1.14C69.893-1.973 68.147-2.363 61.35.227zM25.757 18.677c-5.92.427-7.267.523-10.64-2.14L7.997 11.073c-.87-.78-.387-1.753 1.747-1.94l53.2-3.887c4.467-.387 6.8 1.17 8.543 2.527l8.93 6.42c.387.193.967 1.36-.193 1.36l-55.2 3.307-.267-.193v.01zm-6.22 76.063V28.92c0-2.527.78-3.697 3.113-3.89l63.2-3.693c2.143-.193 3.107 1.167 3.107 3.693v65.437c0 2.53-.39 4.667-3.893 4.86l-60.553 3.5c-3.5.193-4.973-.973-4.973-3.887v-.2zm59.693-62.363c.387 1.75 0 3.5-1.75 3.7l-2.917.553v48.567c-2.527 1.36-4.853 2.137-6.8 2.137-3.107 0-3.883-.973-6.22-3.887l-19.03-29.94v28.96l6.023 1.363s0 3.5-4.857 3.5l-13.393.777c-.39-.78 0-2.723 1.357-3.11l3.497-.943v-38.3L30.82 40.333c-.39-1.75.58-4.277 3.3-4.473l14.367-.967 19.8 30.327v-26.83l-5.047-.583c-.39-2.143 1.163-3.7 3.103-3.89l14.177-.78z" fill="black" />
-  </svg>
-);
-
-const TelegramLogo = () => (
-  <svg viewBox="0 0 24 24" width="20" height="20">
-    <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" fill="#229ED9" />
-  </svg>
-);
+import { LeoIcon, GmailLogo, CalendarLogo, NotionLogo, TelegramLogo } from './icons.jsx';
+import { handleNavClick } from './navigate.js';
+import Footer from './Footer.jsx';
 
 // Inline mark used inside the hero headline
 const HeroTitleMark = () => (
@@ -90,6 +41,13 @@ const HeroFolder = ({ tone, position, label, note, logo, children }) => (
     </div>
   </div>
 );
+
+const orbitPills = [
+  '📧 Email Intelligence',
+  '📅 Smart Scheduling',
+  '✅ Task Automation',
+  '📋 Daily Digest',
+];
 
 const subheadings = [
   "what's on today?",
@@ -178,10 +136,9 @@ function App() {
           <span>leo</span>
         </div>
         <div className="nav-links">
-          <a href="#integrations">integrations</a>
-          <a href="#updates">updates</a>
-          <a href="#newsletter">newsletter</a>
-          <a href="#signin" className="nav-signin">sign in</a>
+          <a href="#integrations">Integrations</a>
+          <a href="/setup" onClick={(e) => handleNavClick(e, '/setup')}>Setup</a>
+          <a href="#newsletter" className="nav-signin">Get Leo</a>
         </div>
       </nav>
 
@@ -207,8 +164,8 @@ function App() {
           </div>
 
           <div className="hero-buttons">
-            <a href="#newsletter" className="hero-btn-primary" style={{ textDecoration: 'none' }}>join now</a>
-            <a href="#how-it-works" className="hero-btn-secondary" style={{ textDecoration: 'none' }}>how does it works</a>
+            <a href="#newsletter" className="hero-btn-primary" style={{ textDecoration: 'none' }}>Join now</a>
+            <a href="/setup" className="hero-btn-secondary" style={{ textDecoration: 'none' }} onClick={(e) => handleNavClick(e, '/setup')}>Setup Leo</a>
           </div>
         </div>
 
@@ -508,12 +465,16 @@ function App() {
           Connect Your Entire<br />Productivity Stack
         </h2>
 
-        {/* Category pills */}
+        {/* Category pills — duplicated so the mobile marquee loops seamlessly */}
         <div className="orbit-pills">
-          <span className="orbit-pill">📧 Email Intelligence</span>
-          <span className="orbit-pill">📅 Smart Scheduling</span>
-          <span className="orbit-pill">✅ Task Automation</span>
-          <span className="orbit-pill">📋 Daily Digest</span>
+          <div className="orbit-pills-track">
+            {orbitPills.map((label) => (
+              <span className="orbit-pill" key={label}>{label}</span>
+            ))}
+            {orbitPills.map((label) => (
+              <span className="orbit-pill" aria-hidden="true" key={`${label}-dup`}>{label}</span>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -598,42 +559,7 @@ function App() {
         )}
       </section>
 
-      {/* ---- FOOTER SECTION ---- */}
-      <footer className="footer-expanded">
-        <div className="footer-top">
-          <div className="footer-brand">
-            <h3 className="footer-logo"><LeoIcon /> leo</h3>
-            <p className="footer-tagline">A data network built for you.</p>
-          </div>
-
-          <div className="footer-links-grid">
-            <div className="footer-col">
-              <h4>READ</h4>
-              <a href="#blog">Blog</a>
-              <a href="#docs" className="text-blue">Docs</a>
-            </div>
-
-            <div className="footer-col">
-              <h4>FIND US</h4>
-              <a href="#instagram">Instagram</a>
-              <a href="#discord">Discord</a>
-              <a href="#x">X</a>
-              <a href="#youtube">YouTube</a>
-              <a href="#github">GitHub</a>
-            </div>
-          </div>
-        </div>
-
-        <div className="footer-bottom">
-          <p className="footer-enterprise">Enterprise and AI labs: <a href="#opendata" className="text-blue">OpenDataLabs -&gt;</a></p>
-          <div className="footer-legal">
-            <span>© 2026 Leo Foundation</span>
-            <a href="#terms">Terms</a>
-            <a href="#privacy">Privacy</a>
-            <span>support@leofoundation.org</span>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

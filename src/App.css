@@ -532,12 +532,6 @@
 .item-3 { background-color: #fcf1d5; }
 .item-4 { background-color: #f2f7e4; }
 
-.accordion-item:hover {
-  flex: 2; 
-  background-color: var(--primary-blue);
-  color: white;
-}
-
 .accordion-header {
   display: flex;
   justify-content: space-between;
@@ -548,8 +542,6 @@
   color: inherit;
   opacity: 0.5;
 }
-
-.accordion-item:hover .accordion-header { opacity: 0.9; }
 
 .accordion-content {
   display: flex;
@@ -575,8 +567,6 @@
   margin-top: 1.5rem;
 }
 
-.accordion-item:hover .accordion-link { opacity: 1; }
-
 .hover-reveal {
   position: absolute;
   bottom: 2.5rem;
@@ -588,18 +578,31 @@
   pointer-events: none;
 }
 
-.accordion-item:hover .hover-reveal {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-
-.accordion-item:hover .default-content {
-  opacity: 0;
-  pointer-events: none;
-}
-
 .default-content { transition: all 0.3s ease; }
+
+/* The expand-on-hover swap only makes sense on devices with real hover
+   (mouse/trackpad) — on touch it would get stuck mid-transition after a tap. */
+@media (hover: hover) {
+  .accordion-item:hover {
+    flex: 2;
+    background-color: var(--primary-blue);
+    color: white;
+  }
+
+  .accordion-item:hover .accordion-header { opacity: 0.9; }
+  .accordion-item:hover .accordion-link { opacity: 1; }
+
+  .accordion-item:hover .hover-reveal {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .accordion-item:hover .default-content {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
 
 /* ============================================
    BRAIN SECTION — scattered sticky notes
@@ -1036,10 +1039,19 @@
 
 /* Category pills */
 .orbit-pills {
+  width: 100%;
+}
+
+.orbit-pills-track {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 0.75rem;
+}
+
+/* The duplicated set only exists for the mobile marquee loop */
+.orbit-pills-track [aria-hidden="true"] {
+  display: none;
 }
 
 .orbit-pill {
@@ -1381,6 +1393,11 @@
   color: var(--primary-blue) !important;
 }
 
+.text-strong {
+  color: #000 !important;
+  font-weight: 600 !important;
+}
+
 .footer-bottom {
   max-width: 1060px;
   margin: 0 auto;
@@ -1451,9 +1468,67 @@
     padding: 0.55rem 1.15rem;
     top: 0.75rem;
   }
-  .accordion-container { flex-direction: column; height: auto; }
-  .accordion-item { border-right: none; border-bottom: 1px solid rgba(0,0,0,0.05); min-height: 200px; }
-  .accordion-item:last-child { border-bottom: none; }
+
+  /* Integrations — 2x2 grid instead of a single stacked column */
+  .accordion-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: auto;
+  }
+
+  /* No hover on touch — show the desktop hover-reveal copy inline instead,
+     ordered as heading -> supporting detail -> link, with the link
+     pinned to the bottom of the card. */
+  .accordion-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 0.9rem;
+    min-height: 260px;
+    padding: 1.65rem 1.4rem 1.85rem;
+    border-right: 1px solid rgba(0, 0, 0, 0.06);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  .accordion-item:nth-child(2n) { border-right: none; }
+  .accordion-item:nth-last-child(-n+2) { border-bottom: none; }
+  .accordion-title { font-size: 1.1rem; line-height: 1.35; max-width: none; }
+  .accordion-link { margin-top: auto; padding-top: 0.5rem; order: 3; }
+
+  .default-content,
+  .hover-reveal {
+    display: contents;
+  }
+  .default-content .accordion-title { order: 1; }
+  .hover-reveal .accordion-title { display: none; }
+  .hover-reveal p {
+    order: 2;
+    opacity: 0.85 !important;
+    font-size: 0.85rem !important;
+    line-height: 1.55 !important;
+    margin-top: 0 !important;
+  }
+}
+
+/* Compact navbar — logo, Setup, and the CTA; Integrations moves to the footer */
+@media (max-width: 640px) {
+  .navbar {
+    padding: 0.55rem 0.55rem 0.55rem 1.1rem;
+  }
+  .nav-links {
+    gap: 0.9rem;
+  }
+  .nav-links a[href="#integrations"] {
+    display: none;
+  }
+  .nav-links a:not(.nav-signin) {
+    font-size: 0.85rem;
+  }
+  .nav-signin {
+    padding: 0.55rem 1.05rem;
+    font-size: 0.8rem !important;
+    white-space: nowrap;
+  }
 }
 
 @media (max-width: 560px) {
@@ -1462,7 +1537,56 @@
   .subheading-line { font-size: 0.82rem; }
   .hero-buttons { flex-wrap: wrap; }
   .hero-folders {
-    bottom: -24px;
-    transform: scale(0.46);
+    bottom: -20px;
+    transform: scale(0.5);
   }
+
+  /* How it works — drop the decorative line graphic on phones */
+  .steps-right { display: none; }
+
+  /* "Connect Your Entire Productivity Stack" pills — auto-scrolling marquee */
+  .orbit-pills {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  }
+  .orbit-pills-track {
+    flex-wrap: nowrap;
+    width: max-content;
+    animation: orbitMarquee 16s linear infinite;
+  }
+  .orbit-pills-track [aria-hidden="true"] {
+    display: inline-flex;
+  }
+  .orbit-pill {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  /* Updates — "Read the blog" sits under the heading, cards scroll horizontally */
+  .updates-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+  .updates-grid {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 1.1rem;
+    padding-bottom: 0.5rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .updates-grid::-webkit-scrollbar { display: none; }
+  .update-card {
+    flex: 0 0 82%;
+    scroll-snap-align: start;
+  }
+}
+
+@keyframes orbitMarquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
