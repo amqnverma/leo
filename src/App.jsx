@@ -118,22 +118,22 @@ const updates = [
   {
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=400&q=80",
     date: "19 AUGUST 2026",
-    title: "The Vana Cup: 43 Apps Built on the Context AI is Missing",
-    description: "Forty-three apps, three weeks, and 18,000 people who brought their own data.",
+    title: "I Built a Chief of Staff Out of Four Apps",
+    description: "Notion, Telegram, Gmail, and Calendar, wired into one assistant that actually knows my day.",
     link: "Read ->"
   },
   {
     image: "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=400&q=80",
     date: "17 AUGUST 2026",
-    title: "Connecting Businesses With Real Human Context in the World of Agentic Commerce",
-    description: "Your agent is only as good as what it knows about you.",
+    title: "Your AI Doesn't Need a Better Model. It Needs Your Calendar.",
+    description: "The smartest assistant in the world is useless if it can't see what you're already booked for.",
     link: "Read ->"
   },
   {
     image: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=400&q=80",
     date: "11 AUGUST 2026",
-    title: "AI Without Context Sucks",
-    description: "The best context can't be scraped. It has to be contributed.",
+    title: "A To-Do List Can't Hold You Accountable. This One Can.",
+    description: "What changes when your task tracker gets a voice and knows where to find you.",
     link: "Read ->"
   }
 ];
@@ -141,6 +141,28 @@ const updates = [
 function App() {
   const [currentLine, setCurrentLine] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [email, setEmail] = useState('');
+  const [subscribeStatus, setSubscribeStatus] = useState('idle');
+
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+    if (!email) return;
+    setSubscribeStatus('loading');
+    try {
+      await fetch('https://amanverma.app.n8n.cloud/webhook/leo-signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+      setSubscribeStatus('success');
+      setEmail('');
+    } catch (error) {
+      console.error('Error submitting email:', error);
+      setSubscribeStatus('error');
+    }
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -209,6 +231,11 @@ function App() {
                   </div>
                 ))}
               </div>
+            </div>
+
+            <div className="hero-buttons">
+              <a href="#newsletter" className="hero-btn-primary" style={{ textDecoration: 'none' }}>join now</a>
+              <a href="#how-it-works" className="hero-btn-secondary" style={{ textDecoration: 'none' }}>how does it works</a>
             </div>
           </div>
 
@@ -291,7 +318,7 @@ function App() {
       <div className="section-divider"></div>
 
       {/* ---- HOW IT WORKS SECTION ---- */}
-      <section className="steps-section">
+      <section className="steps-section" id="how-it-works">
         <div className="steps-container">
           <div className="steps-left">
             <h2 className="steps-heading">How it works</h2>
@@ -332,15 +359,15 @@ function App() {
           <div className="steps-right">
             <svg className="steps-lines-svg" viewBox="0 0 400 500" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
               {/* Converging lines from 4 step positions to a single focal point */}
-              <line x1="0" y1="62"  x2="380" y2="250" stroke="var(--primary-blue)" strokeWidth="1.2" opacity="0.2" />
-              <line x1="0" y1="62"  x2="380" y2="250" stroke="var(--primary-blue)" strokeWidth="1.2" opacity="0.15" strokeDasharray="6 4" />
-              
+              <line x1="0" y1="62" x2="380" y2="250" stroke="var(--primary-blue)" strokeWidth="1.2" opacity="0.2" />
+              <line x1="0" y1="62" x2="380" y2="250" stroke="var(--primary-blue)" strokeWidth="1.2" opacity="0.15" strokeDasharray="6 4" />
+
               <line x1="0" y1="187" x2="380" y2="250" stroke="var(--primary-blue)" strokeWidth="1.2" opacity="0.25" />
               <line x1="0" y1="187" x2="380" y2="250" stroke="var(--primary-blue)" strokeWidth="1.2" opacity="0.15" strokeDasharray="6 4" />
-              
+
               <line x1="0" y1="312" x2="380" y2="250" stroke="var(--primary-blue)" strokeWidth="1.2" opacity="0.25" />
               <line x1="0" y1="312" x2="380" y2="250" stroke="var(--primary-blue)" strokeWidth="1.2" opacity="0.15" strokeDasharray="6 4" />
-              
+
               <line x1="0" y1="437" x2="380" y2="250" stroke="var(--primary-blue)" strokeWidth="1.2" opacity="0.2" />
               <line x1="0" y1="437" x2="380" y2="250" stroke="var(--primary-blue)" strokeWidth="1.2" opacity="0.15" strokeDasharray="6 4" />
 
@@ -450,11 +477,11 @@ function App() {
 
       {/* ---- NEWSLETTER SECTION ---- */}
       <div className="section-divider"></div>
-      <section className="newsletter-section">
+      <section className="newsletter-section" id="newsletter">
         <h2 className="newsletter-heading">
-          Freelance <span className="icon-design-value"></span> design value<br />with one email a week
+          Drop your email <span className="icon-design-value"></span>and get the exact workflow, I'm running.
         </h2>
-        
+
         <div className="newsletter-envelope-wrapper">
           <svg className="envelope-svg" viewBox="0 0 400 240" fill="none" xmlns="http://www.w3.org/2000/svg">
             <defs>
@@ -467,28 +494,42 @@ function App() {
             </defs>
             {/* Envelope Base / Inside */}
             <rect x="0" y="0" width="400" height="240" rx="12" fill="#f5f5f5" stroke="#e5e5e5" strokeWidth="1" />
-            
+
             {/* Side flaps */}
             <path d="M 0 0 L 160 120 L 0 240 Z" fill="#fafafa" stroke="#eaeaea" strokeWidth="1" />
             <path d="M 400 0 L 240 120 L 400 240 Z" fill="#fafafa" stroke="#eaeaea" strokeWidth="1" />
-            
+
             {/* Bottom flap */}
             <path d="M 0 240 L 200 110 L 400 240 Z" fill="#fff" stroke="#eaeaea" strokeWidth="1" filter="url(#inner-shadow)" />
-            
+
             {/* Top flap */}
             <path d="M 0 0 L 200 140 L 400 0 Z" fill="#fff" stroke="#eaeaea" strokeWidth="1.5" filter="url(#flap-shadow)" strokeLinejoin="round" />
-            
+
             <text x="200" y="210" textAnchor="middle" fill="#aaa" fontSize="13" fontWeight="500">From Designers → For Designers</text>
           </svg>
         </div>
 
-        <form className="newsletter-form" onSubmit={(e) => e.preventDefault()}>
-          <input type="email" placeholder="Your Best Email" className="newsletter-input" />
-          <button type="submit" className="newsletter-btn">
-            <span className="btn-icon">📨</span> Join Now
+        <form className="newsletter-form" onSubmit={handleSubscribe}>
+          <input 
+            type="email" 
+            placeholder="Your Best Email" 
+            className="newsletter-input" 
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            disabled={subscribeStatus === 'loading' || subscribeStatus === 'success'}
+            required
+          />
+          <button type="submit" className="newsletter-btn" disabled={subscribeStatus === 'loading' || subscribeStatus === 'success'}>
+            <span className="btn-icon">📨</span> {subscribeStatus === 'loading' ? 'Joining...' : 'Join Now'}
           </button>
         </form>
-        <p className="newsletter-meta">👥 Join 2,500 Designers</p>
+        {subscribeStatus === 'success' ? (
+          <p className="newsletter-meta" style={{ color: '#16a34a', fontWeight: '500', maxWidth: '400px', margin: '0 auto' }}>
+            Thank you - the n8n template for Leo has been delivered to your Email, if not recieved check spam folder
+          </p>
+        ) : (
+          <p className="newsletter-meta">👥 Join 2,500 Designers</p>
+        )}
       </section>
 
       {/* ---- FOOTER SECTION ---- */}
@@ -498,14 +539,14 @@ function App() {
             <h3 className="footer-logo"><LeoIcon /> leo</h3>
             <p className="footer-tagline">A data network built for you.</p>
           </div>
-          
+
           <div className="footer-links-grid">
             <div className="footer-col">
               <h4>READ</h4>
               <a href="#blog">Blog</a>
               <a href="#docs" className="text-blue">Docs</a>
             </div>
-            
+
             <div className="footer-col">
               <h4>FIND US</h4>
               <a href="#instagram">Instagram</a>
