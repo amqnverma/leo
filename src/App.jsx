@@ -53,57 +53,43 @@ const TelegramLogo = () => (
   </svg>
 );
 
-const VoiceLogo = () => (
-  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="24" height="24" rx="12" fill="#7C3AED" />
-    <path d="M12 4a2.5 2.5 0 0 0-2.5 2.5v5a2.5 2.5 0 0 0 5 0v-5A2.5 2.5 0 0 0 12 4z" fill="white" />
-    <path d="M7.5 10.5v1a4.5 4.5 0 0 0 9 0v-1" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
-    <line x1="12" y1="16" x2="12" y2="19" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
-    <line x1="9.5" y1="19" x2="14.5" y2="19" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
-  </svg>
+// Inline mark used inside the hero headline
+const HeroTitleMark = () => (
+  <span className="hero-title-mark" aria-hidden="true">
+    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg">
+      <rect x="5" y="12" width="2" height="2" />
+      <rect x="7" y="10" width="2" height="2" />
+      <rect x="7" y="14" width="2" height="2" />
+      <rect x="9" y="12" width="2" height="2" />
+      <rect x="9" y="6" width="2" height="4" />
+      <rect x="11" y="4" width="4" height="2" />
+      <rect x="15" y="6" width="2" height="2" />
+      <rect x="17" y="8" width="2" height="4" />
+      <rect x="15" y="12" width="2" height="2" />
+      <rect x="13" y="14" width="2" height="4" />
+      <rect x="15" y="18" width="4" height="2" />
+      <rect x="19" y="14" width="2" height="4" />
+    </svg>
+  </span>
 );
 
-const CheckmarkLogo = () => (
-  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="24" height="24" rx="12" fill="#22C55E" />
-    <path d="M7.5 12.5l3 3 6-6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
+// Fanned app folder used at the bottom of the hero
+const HeroFolder = ({ tone, position, label, note, logo, children }) => (
+  <div className={`hero-folder folder-${tone} ${position}`}>
+    <div className="folder-tab"></div>
+    <div className="folder-sheet"></div>
+    <div className="folder-front">
+      <div className="folder-head">
+        <div className="folder-icon">{logo}</div>
+        <div className="folder-heading">
+          <span className="folder-label">{label}</span>
+          <span className="folder-note">{note}</span>
+        </div>
+      </div>
+      <div className="folder-card">{children}</div>
+    </div>
+  </div>
 );
-
-const notifications = [
-  {
-    logo: <GmailLogo />,
-    title: 'Email summarized',
-    meta: '2 min ago',
-    source: 'Gmail',
-    detail: "Rhea's Q3 report highlights attached",
-    bgColor: '#fce8e6',
-  },
-  {
-    logo: <CalendarLogo />,
-    title: 'Call scheduled with Vijay',
-    meta: '5 min ago',
-    source: 'Google Calendar',
-    detail: 'Tomorrow at 3:00 PM',
-    bgColor: '#e8f0fe',
-  },
-  {
-    logo: <NotionLogo />,
-    title: 'Task added',
-    meta: '8 min ago',
-    source: 'Notion',
-    detail: 'Review PR #42 before standup',
-    bgColor: '#f0f0f0',
-  },
-  {
-    logo: <GmailLogo />,
-    title: 'Digest sent',
-    meta: '12 min ago',
-    source: 'Gmail',
-    detail: 'Morning summary delivered to inbox',
-    bgColor: '#fce8e6',
-  },
-];
 
 const subheadings = [
   "what's on today?",
@@ -201,67 +187,99 @@ function App() {
 
       {/* ---- HERO SECTION ---- */}
       <section className="hero-section">
-        <div className="hero-grid-bg"></div>
+        <div className="hero-inner">
+          <h1 className="hero-headline">
+            One Stop Assistant <br />
+            for <HeroTitleMark /> Your Entire Day.
+          </h1>
 
-        {/* Floating integration blocks */}
-        <div className="floating-block block-notion"><NotionLogo /></div>
-        <div className="floating-block block-calendar"><CalendarLogo /></div>
-        <div className="floating-block block-gmail"><GmailLogo /></div>
-        <div className="floating-block block-telegram"><TelegramLogo /></div>
-        <div className="floating-block block-voice"><VoiceLogo /></div>
-        <div className="floating-block block-checkmark"><CheckmarkLogo /></div>
-
-        {/* Split hero content */}
-        <div className="hero-split">
-          {/* LEFT: heading + animated subheading ticker */}
-          <div className="hero-left">
-            <h1 className="hero-headline">
-              Ask leo, your personal assistant for <br />
-              <span className="highlight">email</span>, <span className="highlight">calendar</span> & <span className="highlight">tasks</span>
-            </h1>
-
-            <div className="subheading-ticker">
-              <div
-                className="subheading-track"
-                style={{ transform: `translateY(-${currentLine * 36}px)` }}
-              >
-                {subheadings.map((line, i) => (
-                  <div key={i} className="subheading-line">
-                    {line}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="hero-buttons">
-              <a href="#newsletter" className="hero-btn-primary" style={{ textDecoration: 'none' }}>join now</a>
-              <a href="#how-it-works" className="hero-btn-secondary" style={{ textDecoration: 'none' }}>how does it works</a>
+          <div className="subheading-ticker">
+            <div
+              className="subheading-track"
+              style={{ transform: `translateY(-${currentLine * 36}px)` }}
+            >
+              {subheadings.map((line, i) => (
+                <div key={i} className="subheading-line">
+                  {line}
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* RIGHT: notification ticker */}
-          <div className="hero-right">
-            <div className="notif-ticker-wrapper">
-              <div className="notif-ticker-fade-top"></div>
-              <div className="notif-ticker-fade-bottom"></div>
-              <div className="notif-ticker-track">
-                {/* Duplicate for seamless loop */}
-                {[...notifications, ...notifications].map((n, i) => (
-                  <div className="notif-card" key={i}>
-                    <div className="notif-logo" style={{ background: n.bgColor }}>
-                      {n.logo}
-                    </div>
-                    <div className="notif-body">
-                      <p className="notif-title">
-                        <strong>{n.title}</strong> · <span className="notif-time">{n.meta}</span>
-                      </p>
-                      <span className="notif-detail">{n.detail}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+          <div className="hero-buttons">
+            <a href="#newsletter" className="hero-btn-primary" style={{ textDecoration: 'none' }}>join now</a>
+            <a href="#how-it-works" className="hero-btn-secondary" style={{ textDecoration: 'none' }}>how does it works</a>
           </div>
+        </div>
+
+        {/* Fanned folders — one per connected app */}
+        <div className="hero-folders">
+          <HeroFolder tone="notion" position="folder-pos-1" label="Notion" note="12 tasks synced" logo={<NotionLogo />}>
+            <div className="folder-row">
+              <span className="row-check done"></span>
+              <span className="row-text done">Review PR #42</span>
+            </div>
+            <div className="folder-row">
+              <span className="row-check"></span>
+              <span className="row-text">Draft Q3 report</span>
+              <span className="row-tag">Fri</span>
+            </div>
+            <div className="folder-row">
+              <span className="row-check"></span>
+              <span className="row-text">Scrape Instagram</span>
+              <span className="row-tag low">Low</span>
+            </div>
+          </HeroFolder>
+
+          <HeroFolder tone="gmail" position="folder-pos-2" label="Gmail" note="inbox summarized" logo={<GmailLogo />}>
+            <div className="folder-row">
+              <span className="row-dot"></span>
+              <span className="row-stack">
+                <span className="row-text strong">Rhea Kapoor</span>
+                <span className="row-sub">Q3 report highlights</span>
+              </span>
+              <span className="row-tag">2m</span>
+            </div>
+            <div className="folder-row">
+              <span className="row-dot"></span>
+              <span className="row-stack">
+                <span className="row-text strong">Vijay Menon</span>
+                <span className="row-sub">Re: demo call</span>
+              </span>
+              <span className="row-tag">1h</span>
+            </div>
+            <div className="folder-row">
+              <span className="row-dot muted"></span>
+              <span className="row-stack">
+                <span className="row-text">Stripe</span>
+                <span className="row-sub">Payment received</span>
+              </span>
+            </div>
+          </HeroFolder>
+
+          <HeroFolder tone="calendar" position="folder-pos-3" label="Calendar" note="3 events today" logo={<CalendarLogo />}>
+            <div className="folder-row">
+              <span className="row-time">09:30</span>
+              <span className="row-bar"></span>
+              <span className="row-text">Daily standup</span>
+            </div>
+            <div className="folder-row">
+              <span className="row-time">12:30</span>
+              <span className="row-bar amber"></span>
+              <span className="row-text">Vendor call</span>
+            </div>
+            <div className="folder-row">
+              <span className="row-time">15:00</span>
+              <span className="row-bar green"></span>
+              <span className="row-text">Call with Vijay</span>
+            </div>
+          </HeroFolder>
+
+          <HeroFolder tone="telegram" position="folder-pos-4" label="Telegram" note="always reachable" logo={<TelegramLogo />}>
+            <div className="tg-bubble out">what&apos;s on today?</div>
+            <div className="tg-bubble in">3 events, 2 tasks due</div>
+            <div className="tg-bubble in">added &ldquo;call vendor&rdquo; ✓</div>
+          </HeroFolder>
         </div>
       </section>
 
@@ -317,6 +335,87 @@ function App() {
 
       <div className="section-divider"></div>
 
+      {/* ---- BRAIN / STICKY NOTES SECTION ---- */}
+      <section className="brain-section" id="brain">
+        <div className="brain-stage">
+          {/* Centre message */}
+          <div className="brain-center">
+            <h2 className="brain-heading">
+              Your brain&apos;s job is to<br />brainstorm, not to store stuff.
+            </h2>
+            <div className="brain-prompt" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="9" y="3" width="6" height="10" rx="3" fill="#9a9a9a" />
+                <path d="M6 11v.5a6 6 0 0 0 12 0V11" stroke="#9a9a9a" strokeWidth="1.6" strokeLinecap="round" />
+                <path d="M12 17.5V20" stroke="#9a9a9a" strokeWidth="1.6" strokeLinecap="round" />
+              </svg>
+              <span>say it once — leo remembers the rest</span>
+            </div>
+          </div>
+
+          {/* Faint margin notes */}
+          <span className="brain-scribble scribble-1">no more mental tabs</span>
+          <span className="brain-scribble scribble-2">fully hands-free</span>
+
+          {/* Sticky notes */}
+          <article className="sticky-note note-impact">
+            <span className="note-tag">IMPACT</span>
+            <h3 className="note-title">Productivity</h3>
+            <div className="note-stat">
+              <span className="note-stat-value">+25%</span>
+              <span className="note-badge">Faster</span>
+            </div>
+            <p className="note-desc">More output every week, without adding hours to your day.</p>
+            <svg className="note-spark" viewBox="0 0 240 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 52 C 46 50, 62 40, 96 32 S 158 18, 236 8" stroke="#1c8fe0" strokeWidth="3.5" strokeLinecap="round" />
+            </svg>
+          </article>
+
+          <article className="sticky-note note-voice">
+            <span className="note-tag">VOICE</span>
+            <h3 className="note-title">Just Say It</h3>
+            <p className="note-desc">Ramble into your phone. Leo files it properly.</p>
+            <span className="note-wave" aria-hidden="true">
+              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            </span>
+          </article>
+
+          <article className="sticky-note note-channels">
+            <span className="note-tag">PLATFORM</span>
+            <h3 className="note-title">Multi-Channel</h3>
+            <p className="note-desc">One assistant across every app you already live in.</p>
+            <div className="note-logos">
+              <span className="note-logo"><NotionLogo /></span>
+              <span className="note-logo"><GmailLogo /></span>
+              <span className="note-logo"><CalendarLogo /></span>
+              <span className="note-logo"><TelegramLogo /></span>
+            </div>
+          </article>
+
+          <article className="sticky-note note-system">
+            <span className="note-tag">SYSTEM</span>
+            <h3 className="note-title">Don&apos;t Just Store It</h3>
+            <p className="note-desc">Leo ranks what matters and puts it back in front of you.</p>
+            <div className="note-priority">
+              <div className="priority-row">
+                <span className="priority-rank high">1</span>
+                <span className="priority-text">Send Rhea the Q3 deck</span>
+              </div>
+              <div className="priority-row">
+                <span className="priority-rank mid">2</span>
+                <span className="priority-text">Confirm vendor call</span>
+              </div>
+              <div className="priority-row">
+                <span className="priority-rank low">3</span>
+                <span className="priority-text">Scrape Instagram</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <div className="section-divider"></div>
+
       {/* ---- HOW IT WORKS SECTION ---- */}
       <section className="steps-section" id="how-it-works">
         <div className="steps-container">
@@ -336,7 +435,7 @@ function App() {
                 <span className="step-number">02</span>
                 <div className="step-text">
                   <h3>Tell Leo what you need</h3>
-                  <p>Type a natural-language command — schedule a call, summarize an email, add a task. No menus, no forms, just talk.</p>
+                  <p>Type or speak a command in natural language — schedule a call, summarize an email, add a task. No menus, no forms, just talk.</p>
                 </div>
               </div>
               <div className="step-item">
@@ -388,39 +487,6 @@ function App() {
 
       {/* ---- ORBIT SHOWCASE SECTION ---- */}
       <section className="orbit-section">
-        <div className="orbit-visual">
-          {/* Arc lines */}
-          <svg className="orbit-arcs" viewBox="0 0 700 350" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M 50 340 Q 350 -40, 650 340" stroke="rgba(0,0,0,0.06)" strokeWidth="1" fill="none" />
-            <path d="M 100 340 Q 350 20, 600 340" stroke="rgba(0,0,0,0.05)" strokeWidth="1" fill="none" />
-            <path d="M 150 340 Q 350 80, 550 340" stroke="rgba(0,0,0,0.04)" strokeWidth="1" fill="none" />
-          </svg>
-
-          {/* Floating logo nodes */}
-          <div className="orbit-node node-notion">
-            <div className="orbit-node-icon"><NotionLogo /></div>
-            <span className="orbit-node-badge badge-green">● synced</span>
-          </div>
-          <div className="orbit-node node-gmail-orbit">
-            <div className="orbit-node-icon"><GmailLogo /></div>
-            <span className="orbit-node-badge badge-red">3 new</span>
-          </div>
-          <div className="orbit-node node-cal-orbit">
-            <div className="orbit-node-icon"><CalendarLogo /></div>
-            <span className="orbit-node-badge badge-blue">● 12</span>
-          </div>
-          <div className="orbit-node node-telegram-orbit">
-            <div className="orbit-node-icon"><TelegramLogo /></div>
-          </div>
-          <div className="orbit-node node-voice-orbit">
-            <div className="orbit-node-icon"><VoiceLogo /></div>
-          </div>
-          <div className="orbit-node node-check-orbit">
-            <div className="orbit-node-icon"><CheckmarkLogo /></div>
-            <span className="orbit-node-badge badge-green">done</span>
-          </div>
-        </div>
-
         {/* Stats row */}
         <div className="orbit-stats">
           <div className="orbit-stat">
@@ -439,7 +505,7 @@ function App() {
 
         {/* Heading */}
         <h2 className="orbit-heading">
-          We Connect Your Entire<br />Productivity Stack
+          Connect Your Entire<br />Productivity Stack
         </h2>
 
         {/* Category pills */}

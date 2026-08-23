@@ -1,12 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  --bg-color: #f6f5ef;
+  --bg-color: #ffffff;
   --primary-blue: #4454ff;
   --text-dark: #1a1a1a;
   --text-light: #ffffff;
-  
+
   --font-main: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --font-hand: 'Gochi Hand', 'Bradley Hand', 'Comic Sans MS', cursive;
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace;
 }
 
 * {
